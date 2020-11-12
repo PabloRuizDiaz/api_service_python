@@ -99,12 +99,24 @@ def personas():
 @app.route("/comparativa")
 def comparativa():
     try:
-        # Mostrar todos los registros en formato tabla
-        result = '''<h3>Implementar una función en persona.py
-                    nationality_review</h3>'''
-        result += '''<h3>Esa funcion debe devolver los datos que necesite
-                    para implementar el grafico a mostrar</h3>'''
-        return (result)
+        natio, num_people = persona.bar_plot()
+
+        fig = plt.figure()
+        ax = fig.add_subplot()
+        
+        ax.bar(natio, num_people)
+        
+        ax.set_title('COMPARATIVAS DE NACIONALIDADES')
+        ax.set_xlabel('NACIONALIDADES')
+        ax.set_ylabel('NUMERO DE PERSONAS')
+        ax.grid()
+        ax.set_facecolor('whitesmoke')
+
+        output = io.BytesIO()
+        FigureCanvas(fig).print_png(output)
+        plt.close(fig)
+        return Response(output.getvalue(), mimetype='image/png')
+
     except:
         return jsonify({'trace': traceback.format_exc()})
 
@@ -113,11 +125,15 @@ def comparativa():
 def registro():
     if request.method == 'POST':
         # Obtener del HTTP POST JSON el nombre y los pulsos
-        # name = ...
-        # age = ...
-        # nationality = ...
+        name = str(request.form.get('name'))
+        age = str(request.form.get('age'))
+        nationality = str(request.form.get('nationality'))
+
+        if(name is None or nationality is None or age.isdigit() is False):
+                return Response(status=400)
         
-        # persona.insert(name, int(age), nationality)
+        persona.insert(name, int(age), nationality)
+        
         return Response(status=200)
     
 

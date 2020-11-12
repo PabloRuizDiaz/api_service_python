@@ -86,3 +86,25 @@ def report(limit=0, offset=0):
     # Cerrar la conexión con la base de datos
     conn.close()
     return query_results
+
+
+def bar_plot():
+    conn = sqlite3.connect('persona.db')
+    c = conn.cursor()
+
+    c.execute('''
+            SELECT COUNT(name), nationality FROM persona
+            GROUP BY nationality;
+            ''')
+
+    query_output = c.fetchall()
+    
+    if query_output is None:
+        return []
+
+    conn.close()
+
+    num_natio = [x[0] for x in query_output]
+    natio = [x[1] for x in query_output]
+
+    return natio, num_natio

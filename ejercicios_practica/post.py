@@ -33,13 +33,24 @@ url = f'http://{ip}:{port}/{endpoint}'
 
 if __name__ == "__main__":
     try:
-        name = str(input('Ingrese el nombre de la persona:'))
-        age = int(input('Ingrese la edad:'))
-        nationality = str(input('Ingrese la nacionalidad:'))
-        post_data = {"name": name, "age": age, "nationality": nationality}        
-        x = requests.post(url, data = post_data)
-        print('POST enviado a:',url)
-        print('Datos:')
-        print(post_data)
+        while True:
+            name = str(input('Ingrese el nombre de la persona:'))
+            
+            if name is None:
+                break
+            
+            age = int(input('Ingrese la edad:'))
+            
+            nationality = str(input('Ingrese la nacionalidad:'))
+            
+            post_data = {"name": name, "age": age, "nationality": nationality}        
+            
+            x = requests.post(url, data = post_data)
+            
+            print('POST enviado a:',url)
+            print('Datos:')
+            print(post_data)
+
+            
     except:
         print('Error, POST no efectuado')
