@@ -35,12 +35,7 @@ if __name__ == "__main__":
     try:
         while True:
             name = str(input('Ingrese el nombre de la persona:'))
-            
-            if name is None:
-                break
-            
             age = int(input('Ingrese la edad:'))
-            
             nationality = str(input('Ingrese la nacionalidad:'))
             
             post_data = {"name": name, "age": age, "nationality": nationality}        

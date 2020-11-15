@@ -99,12 +99,12 @@ def bar_plot():
 
     query_output = c.fetchall()
     
+    conn.close()
+
     if query_output is None:
         return []
 
-    conn.close()
-
-    num_natio = [x[0] for x in query_output]
+    num_people = [x[0] for x in query_output]
     natio = [x[1] for x in query_output]
 
-    return natio, num_natio
+    return natio, num_people
